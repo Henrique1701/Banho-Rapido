@@ -14,7 +14,6 @@
 		C31CD31C240D805600F3C510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31CD31B240D805600F3C510 /* Assets.xcassets */; };
 		C31CD31F240D805600F3C510 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31CD31D240D805600F3C510 /* LaunchScreen.storyboard */; };
 		C3BAF36724182E4700BDB0E7 /* Chuveiro.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BAF36624182E4700BDB0E7 /* Chuveiro.swift */; };
-		C3BBB945241FA531002FEE34 /* TesteGit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BBB944241FA531002FEE34 /* TesteGit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		C31CD31E240D805600F3C510 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C31CD320240D805600F3C510 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3BAF36624182E4700BDB0E7 /* Chuveiro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chuveiro.swift; sourceTree = "<group>"; };
-		C3BBB944241FA531002FEE34 /* TesteGit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesteGit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +66,6 @@
 				C31CD31D240D805600F3C510 /* LaunchScreen.storyboard */,
 				C31CD320240D805600F3C510 /* Info.plist */,
 				C3BAF36624182E4700BDB0E7 /* Chuveiro.swift */,
-				C3BBB944241FA531002FEE34 /* TesteGit.swift */,
 			);
 			path = "Banho Rapido";
 			sourceTree = "<group>";
@@ -144,7 +141,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3BBB945241FA531002FEE34 /* TesteGit.swift in Sources */,
 				C31CD317240D805200F3C510 /* ViewController.swift in Sources */,
 				C31CD313240D805200F3C510 /* AppDelegate.swift in Sources */,
 				C3BAF36724182E4700BDB0E7 /* Chuveiro.swift in Sources */,
