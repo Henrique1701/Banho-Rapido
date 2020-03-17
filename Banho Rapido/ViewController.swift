@@ -275,7 +275,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             viewTelaCronometro.backgroundColor = UIColor.systemYellow
             botaoTerminarBanho.tintColor = UIColor.systemYellow
         } else {
-            if segundos == 10 {
+            if segundos == 10 || segundos%20 == 0 {
                 AudioServicesPlaySystemSound(SystemSoundID(1005))
             }
             viewTelaCronometro.backgroundColor = UIColor.systemRed
