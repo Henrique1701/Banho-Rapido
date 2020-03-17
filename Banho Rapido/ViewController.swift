@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import UserNotifications
+import AVFoundation
+import AudioToolbox
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
@@ -268,9 +269,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             viewTelaCronometro.backgroundColor = UIColor.systemGreen
             botaoTerminarBanho.tintColor = UIColor.systemGreen
         } else if(segundos < 10){
+            if segundos == 5 {
+                AudioServicesPlaySystemSound(SystemSoundID(1005))
+            }
             viewTelaCronometro.backgroundColor = UIColor.systemYellow
             botaoTerminarBanho.tintColor = UIColor.systemYellow
         } else {
+            if segundos == 10 {
+                AudioServicesPlaySystemSound(SystemSoundID(1005))
+            }
             viewTelaCronometro.backgroundColor = UIColor.systemRed
             botaoTerminarBanho.tintColor = UIColor.systemRed
         }
