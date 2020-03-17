@@ -65,8 +65,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         //valorTextFieldVazao = Float (textFieldVazao.text!)!
         let chuveiroInformacoes = Chuveiro(vazao: valorTextFieldVazao, eletrico: escolhasChuveiro[pickerTipoChuveiro.selectedRow(inComponent: 0)])
         let quantidadeGastaAgua = chuveiroInformacoes.calculaGastoAgua(minutos: tempoBanhoMinSeg[0], segundos: tempoBanhoMinSeg[1])
-        labelInforTempoGasto.text = "Você pasou \(tempoBanhoMinSeg[0]) min e \(tempoBanhoMinSeg[1]) seg no banho"
-        labelInfoLitosGastos.text = "E gostou \(round(quantidadeGastaAgua)) litros de água"
+        labelInforTempoGasto.text = "Você passou \(tempoBanhoMinSeg[0]) min e \(tempoBanhoMinSeg[1]) seg no banho"
+        labelInfoLitosGastos.text = "E gastou \(round(quantidadeGastaAgua)) litros de água"
         
     }
     
@@ -91,6 +91,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         viewInformacoesVazao.isHidden = true
         botaoIniciarBanho.alpha = 1
         pickerTipoChuveiro.alpha = 1
+        labelTipoChuveiro.alpha = 1
+        textFieldVazao.alpha = 1
         botaoMaisInformacao.alpha = 1
         botaoMaisInformacao2.alpha = 1
     }
@@ -131,8 +133,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         botaoInformacaoVazao.alpha = 1
     }
     @IBAction func clicouLinkVazao() {
-        let url = URL(string: "www.youtube.com/watch?v=nZ12dCRh-bM")!
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(URL(string: "https://www.youtube.com/watch?v=nZ12dCRh-bM")! as URL, options: [:], completionHandler: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
