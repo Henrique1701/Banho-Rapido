@@ -29,12 +29,28 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet var labelInfoLitosGastos: UILabel!
     @IBOutlet var viewInformacoesVazao: UIView!
     @IBOutlet var viewMaisInformacoes: UIView!
+    @IBOutlet var viewBoxInfoBanho: UIView!
     
     var escolhaChuveiroEletrico: String = ""
     var estadoBotaoIniciarTerminarBanho = false
     var tempoBanhoMinSeg: [Int] = [0, 0]
     var quantidadeGastaAguaBanho: Double = 0
+    let escolhasChuveiro = ["Sim", "Não"]
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        textFieldVazao.delegate = self
+        pickerTipoChuveiro.dataSource = self
+        pickerTipoChuveiro.delegate = self
+        viewInformacoesVazao.layer.cornerRadius = 20
+        viewMaisInformacoes.layer.cornerRadius = 20
+        viewBoxInfoBanho.layer.cornerRadius = 20
+        
+        let content = UNMutableNotificationContent()
+        content.sound = UNNotificationSound.default
+
+        _ = UNNotificationRequest(identifier: "id", content: content, trigger: nil)
+    }
     
     @IBAction func clicarIniciar() {
         esconderComponentesTelaPrincipal()
@@ -56,18 +72,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         labelCronometro.text = String(format: "%02i:%02i", auxiliarStringMinutosSegundos[0], auxiliarStringMinutosSegundos[1])
         
         // Calcular gasto de agua
-        // let valorTextFieldVazao: Float = Float (textFieldVazao.text!)!
         let posiaoPickerTipoChuveiro: Int = pickerTipoChuveiro.selectedRow(inComponent: 0)
         print(posiaoPickerTipoChuveiro)
         var valorTextFieldVazao: Double = 0
         if !(textFieldVazao.text ?? "").isEmpty {
             valorTextFieldVazao = Double (textFieldVazao.text!)!
         }
-        //valorTextFieldVazao = Float (textFieldVazao.text!)!
         let chuveiroInformacoes = Chuveiro(vazao: valorTextFieldVazao, eletrico: escolhasChuveiro[pickerTipoChuveiro.selectedRow(inComponent: 0)])
         let quantidadeGastaAgua = chuveiroInformacoes.calculaGastoAgua(minutos: tempoBanhoMinSeg[0], segundos: tempoBanhoMinSeg[1])
-        labelInforTempoGasto.text = "Você passou \(tempoBanhoMinSeg[0]) min e \(tempoBanhoMinSeg[1]) seg no banho"
-        labelInfoLitosGastos.text = "E gastou \(round(quantidadeGastaAgua)) litros de água"
+        labelInforTempoGasto.text = "E passou \(tempoBanhoMinSeg[0]) min e \(tempoBanhoMinSeg[1]) seg no banho"
+        labelInfoLitosGastos.text = "Você gastou \(round(quantidadeGastaAgua)) litros de água"
         
     }
     
@@ -78,7 +92,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     @IBAction func cliclarBotaoInfoVazao() {
-        //mostrarInformacoesVazao()
         viewInformacoesVazao.isHidden = false
         botaoIniciarBanho.alpha = 0.4
         pickerTipoChuveiro.alpha = 0.4
@@ -142,25 +155,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        textFieldVazao.delegate = self
-        pickerTipoChuveiro.dataSource = self
-        pickerTipoChuveiro.delegate = self
-        viewInformacoesVazao.layer.cornerRadius = 20
-        viewMaisInformacoes.layer.cornerRadius = 20
-        
-        let content = UNMutableNotificationContent()
-        content.sound = UNNotificationSound.default
-
-        _ = UNNotificationRequest(identifier: "id", content: content, trigger: nil)
-    }
-    
-    
     /// Configuracao picker
-    let escolhasChuveiro = ["Sim", "Não"]
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -179,7 +174,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         escolhaChuveiroEletrico = escolhasChuveiro[row]
         print(escolhaChuveiroEletrico)
     }
-    
     
     /// Confuguracao de telas
     func esconderComponentesTelaPrincipal(){
@@ -238,14 +232,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func esconderInformacoesBanho() {
         viewTelaInformacoesBanho.isHidden = true
-    }
-    
-    func mostrarInformacoesVazao () {
-        viewInformacoesVazao.isHidden = false
-    }
-    
-    func esconderInformacoesVazao() {
-        viewInformacoesVazao.isHidden = true
     }
     
     ///Código teste de cronometro:
