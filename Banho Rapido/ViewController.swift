@@ -30,12 +30,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet var viewInformacoesVazao: UIView!
     @IBOutlet var viewMaisInformacoes: UIView!
     @IBOutlet var viewBoxInfoBanho: UIView!
+    @IBOutlet var labelPrecisaoVazao: UILabel!
+    @IBOutlet var scPrecisaoVazao: UISegmentedControl!
     
     var escolhaChuveiroEletrico: String = ""
     var estadoBotaoIniciarTerminarBanho = false
     var tempoBanhoMinSeg: [Int] = [0, 0]
     var quantidadeGastaAguaBanho: Double = 0
     let escolhasChuveiro = ["Sim", "Não"]
+    var estadoSegmentedControl = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +48,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         viewInformacoesVazao.layer.cornerRadius = 20
         viewMaisInformacoes.layer.cornerRadius = 20
         viewBoxInfoBanho.layer.cornerRadius = 20
+        labelTipoChuveiro.alpha = 0.4
+        pickerTipoChuveiro.alpha = 0.4
+        pickerTipoChuveiro.isUserInteractionEnabled = false
         
         let content = UNMutableNotificationContent()
         content.sound = UNNotificationSound.default
@@ -78,7 +84,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         if !(textFieldVazao.text ?? "").isEmpty {
             valorTextFieldVazao = Double (textFieldVazao.text!)!
         }
-        let chuveiroInformacoes = Chuveiro(vazao: valorTextFieldVazao, eletrico: escolhasChuveiro[pickerTipoChuveiro.selectedRow(inComponent: 0)])
+        let chuveiroInformacoes = Chuveiro(vazao: valorTextFieldVazao, eletrico: escolhasChuveiro[pickerTipoChuveiro.selectedRow(inComponent: 0)], precisao: estadoSegmentedControl)
         let quantidadeGastaAgua = chuveiroInformacoes.calculaGastoAgua(minutos: tempoBanhoMinSeg[0], segundos: tempoBanhoMinSeg[1])
         labelInforTempoGasto.text = "E passou \(tempoBanhoMinSeg[0]) min e \(tempoBanhoMinSeg[1]) seg no banho"
         labelInfoLitosGastos.text = "Você gastou \(round(quantidadeGastaAgua)) litros de água"
@@ -99,6 +105,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         textFieldVazao.alpha = 0.4
         botaoMaisInformacao.alpha = 0.4
         botaoMaisInformacao2.alpha = 0.4
+        labelPrecisaoVazao.alpha = 0.4
+        scPrecisaoVazao.alpha = 0.4
     }
     
     @IBAction func clicarFecharInfoVazao() {
@@ -109,6 +117,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         textFieldVazao.alpha = 1
         botaoMaisInformacao.alpha = 1
         botaoMaisInformacao2.alpha = 1
+        labelPrecisaoVazao.alpha = 1
+        scPrecisaoVazao.alpha = 1
     }
     
     @IBAction func gestoTocouTela(_ sender: Any) {
@@ -123,6 +133,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         labelSelecioneVazao1.alpha = 0.4
         labelSelecioneVazao2.alpha = 0.4
         botaoInformacaoVazao.alpha = 0.4
+        labelPrecisaoVazao.alpha = 0.4
+        scPrecisaoVazao.alpha = 0.4
     }
     @IBAction func cliclarMaisInformacoesIcone() {
         //mostrarMaisInformacoes()
@@ -134,6 +146,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         labelSelecioneVazao1.alpha = 0.4
         labelSelecioneVazao2.alpha = 0.4
         botaoInformacaoVazao.alpha = 0.4
+        labelPrecisaoVazao.alpha = 0.4
+        scPrecisaoVazao.alpha = 0.4
     }
     @IBAction func clicarFecharMaisInformacoes() {
         //esconderMaisInformacoes()
@@ -145,6 +159,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         labelSelecioneVazao1.alpha = 1
         labelSelecioneVazao2.alpha = 1
         botaoInformacaoVazao.alpha = 1
+        labelPrecisaoVazao.alpha = 1
+        scPrecisaoVazao.alpha = 1
     }
     @IBAction func clicouLinkVazao() {
         UIApplication.shared.open(URL(string: "https://www.youtube.com/watch?v=nZ12dCRh-bM")! as URL, options: [:], completionHandler: nil)
@@ -154,6 +170,21 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         textFieldVazao.endEditing(true)
     }
     
+    @IBAction func clicouSCPrecisaoVazao(_ sender: Any) {
+        estadoSegmentedControl = scPrecisaoVazao.selectedSegmentIndex
+        if estadoSegmentedControl == 0 {
+            // estadoSegmentedControl == Sim
+            labelTipoChuveiro.alpha = 0.4
+            pickerTipoChuveiro.alpha = 0.4
+            pickerTipoChuveiro.isUserInteractionEnabled = false
+        } else {
+            // estadoSegmentedControl == Não
+            labelTipoChuveiro.alpha = 1
+            pickerTipoChuveiro.alpha = 1
+            pickerTipoChuveiro.isUserInteractionEnabled = true
+        }
+        
+    }
     
     /// Configuracao picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -193,6 +224,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         //self.view.backgroundColor = UIColor.green
         labelTipoChuveiro.isHidden = true
         textFieldVazao.isHidden = true
+        labelPrecisaoVazao.isHidden = true
+        scPrecisaoVazao.isHidden = true
     }
     
     func mostrarComponentesTelaPrincipal(){
@@ -211,6 +244,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         labelTipoChuveiro.isHidden = false
         textFieldVazao.isHidden = false
+        labelPrecisaoVazao.isHidden = false
+        scPrecisaoVazao.isHidden = false
     }
     
     func mostrarComponentesCronometro(){
@@ -233,6 +268,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func esconderInformacoesBanho() {
         viewTelaInformacoesBanho.isHidden = true
     }
+    
     
     ///Código teste de cronometro:
     /// (https://medium.com/ios-os-x-development/build-an-stopwatch-with-swift-3-0-c7040818a10f)

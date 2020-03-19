@@ -11,17 +11,19 @@ import Foundation
 class Chuveiro {
     var vazao: Double
     var eletrico: String
+    var precisao: Int
     
-    init(vazao: Double, eletrico: String) {
+    init(vazao: Double, eletrico: String, precisao: Int) {
         self.vazao = vazao
         self.eletrico = eletrico
+        self.precisao = precisao
     }
     
     func calculaGastoAgua(minutos: Int, segundos: Int) -> Double {
         var quantidadeAgua:Double
         quantidadeAgua = (Double(minutos) * vazao) + ((Double(segundos) / 60) * vazao)
         
-        if eletrico == "Não" {
+        if precisao == 1 && eletrico == "Não" {
             quantidadeAgua = quantidadeAgua * 3
         }
         
